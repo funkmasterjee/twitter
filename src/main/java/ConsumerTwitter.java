@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class consumer_twitter {
+public class ConsumerTwitter {
     public void setMsgQueue(BlockingQueue<String> msgQueue) {
         this.msgQueue = msgQueue;
 

@@ -1,8 +1,6 @@
 import com.google.common.collect.Lists;
 //import com.sun.org.slf4j.internal.Logger;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 //import com.sun.org.slf4j.internal.LoggerFactory;
@@ -52,11 +50,8 @@ public class TwitterProducer {
                 // Attempts to establish a connection.
                 client.connect();
 
-
                 //create a kafka producer
-            KafkaProducer<String, String> = new createKafkaProducer;
-
-
+                KafkaProducer<String, String> producer = createKafkaProducer();
 
                 // loop to send tweets to kafka
                 while (!client.isDone()) {
@@ -70,7 +65,15 @@ public class TwitterProducer {
                     }
                     if (msg != null){
                         logger.info(msg);
-                        producer.send(new ProducerRecord<>)
+                        producer.send(new ProducerRecord<>("twitter_tweets", null, msg), new Callback()
+
+                        {
+                            @Override
+                            public void onCompletion(RecordMetadata recordMetadata, Exception e){
+                                if (e !=null ){logger.error("Something bac happened", e);}
+
+                            }
+                        });
                     }
                 }
                 logger.info("End of application");
